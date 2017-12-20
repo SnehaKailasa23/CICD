@@ -137,14 +137,12 @@ node {
 							docker tag ${docker_properties.cp_image_name} ${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name} | echo "${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name}" >> docker_images
 							docker tag ${docker_properties.cp_image_name} ${docker_properties.Docker_Reg_Name}/${cpImageName} | echo "${docker_properties.Docker_Reg_Name}/${cpImageName}" >> docker_images
 							""" */
-						def count = 0
 						def array = []
 						array[0] = properties.om_image_name
 						array[1] = properties.cp_image_name
-						array.each{
-							docker tag array[count] ${docker_properties.Docker_Reg_Name}/$array[count] >> docker_images
-							docker tag array[count] ${docker_properties.Docker_Reg_Name}/$array[count].substring(0 , $array[count].indexOf(":"))+":latest" >> docker_images
-							count ++;
+						array.each{ $it ->  
+							docker tag $it ${docker_properties.Docker_Reg_Name}/$it >> docker_images
+							docker tag $it ${docker_properties.Docker_Reg_Name}/$it.substring(0 , $it.indexOf(":"))+":latest" >> docker_images
 						}
 						def file = readFile "docker_images"		// read image names from this file
        					def lines = file.readLines()	
