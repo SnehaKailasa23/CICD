@@ -137,6 +137,7 @@ node {
 							docker tag ${docker_properties.cp_image_name} ${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name} | echo "${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name}" >> docker_images
 							docker tag ${docker_properties.cp_image_name} ${docker_properties.Docker_Reg_Name}/${cpImageName} | echo "${docker_properties.Docker_Reg_Name}/${cpImageName}" >> docker_images
 							""" */
+						def array = []
 						array[0] = properties.om_image_name
 		array[1] = properties.cp_image_name
 		 docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
