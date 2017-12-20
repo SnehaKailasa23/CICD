@@ -128,14 +128,23 @@ node {
 					// ***** Stage for Publishing Docker images ***** //							
 					stage ('Publish Docker Images'){
 						Reason = "Publish Docker Images Failed"								
-						def cpImageName = docker_properties.cp_image_name.substring(0 , docker_properties.cp_image_name.indexOf(":"))+":latest"
+						/*def cpImageName = docker_properties.cp_image_name.substring(0 , docker_properties.cp_image_name.indexOf(":"))+":latest"
 						def omImageName = docker_properties.om_image_name.substring(0 , docker_properties.om_image_name.indexOf(":"))+":latest"
 						sh """
 							docker tag ${docker_properties.om_image_name} ${docker_properties.Docker_Reg_Name}/${docker_properties.om_image_name} | echo "${docker_properties.Docker_Reg_Name}/${docker_properties.om_image_name}" >> docker_images
 							docker tag ${docker_properties.om_image_name} ${docker_properties.Docker_Reg_Name}/${omImageName} | echo "${docker_properties.Docker_Reg_Name}/${omImageName}" >> docker_images
 							docker tag ${docker_properties.cp_image_name} ${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name} | echo "${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name}" >> docker_images
 							docker tag ${docker_properties.cp_image_name} ${docker_properties.Docker_Reg_Name}/${cpImageName} | echo "${docker_properties.Docker_Reg_Name}/${cpImageName}" >> docker_images
-							"""
+							""" */
+						def count = 0
+						def array = []
+						array[0] = properties.om_image_name
+						array[1] = properties.cp_image_name
+						array.each{
+							docker tag array[count] ${docker_properties.Docker_Reg_Name}/array[count] >> docker_images
+							docker tag array[count] ${docker_properties.Docker_Reg_Name}/array[count].substring(0 , array[count].indexOf(":"))+":latest" >> docker_images
+							count ++;
+						}
 						def file = readFile "docker_images"		// read image names from this file
        					def lines = file.readLines()	
 						docker.withRegistry("${docker_properties.Docker_Registry_URL}", "${docker_properties.Docker_Credentials}"){
