@@ -81,7 +81,7 @@ node {
 		}	// Reading branch variable stage ends
 	
 /****************************** Building the Application and performing SonarQube analysis ******************************/	
-		stage ('Maven Build') {
+		/*stage ('Maven Build') {
 			Reason = "Maven Build Failed"
 			rtMaven.deployer server: server, snapshotRepo: docker_properties.snapshot_repo, releaseRepo: docker_properties.release_repo			//Deploying artifacts to this repo //
 			rtMaven.deployer.deployArtifacts = false		//this will not publish artifacts soon after build succeeds	//
@@ -94,6 +94,7 @@ node {
 				}
 			//}
 		}	//Maven Build stage ends 
+		*/
 
 /****************************** Docker Compose and Robot Framework testing on container ******************************/
 		stage ('Docker Deploy and RFW') {
@@ -141,8 +142,8 @@ node {
 						array[0] = properties.om_image_name
 						array[1] = properties.cp_image_name
 						array.each{
-							docker tag array[count] ${docker_properties.Docker_Reg_Name}/array[count] >> docker_images
-							docker tag array[count] ${docker_properties.Docker_Reg_Name}/array[count].substring(0 , array[count].indexOf(":"))+":latest" >> docker_images
+							docker tag array[count] ${docker_properties.Docker_Reg_Name}/$array[count] >> docker_images
+							docker tag array[count] ${docker_properties.Docker_Reg_Name}/$array[count].substring(0 , $array[count].indexOf(":"))+":latest" >> docker_images
 							count ++;
 						}
 						def file = readFile "docker_images"		// read image names from this file
