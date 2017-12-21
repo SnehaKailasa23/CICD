@@ -125,29 +125,20 @@ node {
 					}*/
 					// ***** Stage for Publishing Docker images ***** //							
 					stage ('Publish Docker Images'){
-						Reason = "Publish Docker Images Failed"
-						def cp_index = docker_properties.cp_image_name.indexOf(":");								
-						def cpImageName = docker_properties.cp_image_name.substring(0 , cp_index)+":latest"
-						def om_index = docker_properties.om_image_name.indexOf(":");
-						def omImageName = docker_properties.om_image_name.substring(0 , om_index)+":latest"
-						sh """
-							docker tag ${docker_properties.om_image_name} ${docker_properties.Docker_Reg_Name}/${docker_properties.om_image_name}
-							docker tag ${docker_properties.om_image_name} ${docker_properties.Docker_Reg_Name}/${omImageName}
-							docker tag ${docker_properties.cp_image_name} ${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name}
-							docker tag ${docker_properties.cp_image_name} ${docker_properties.Docker_Reg_Name}/${cpImageName}
-							"""
-							docker.withRegistry("${docker_properties.Docker_Registry_URL}", "${docker_properties.Docker_Credentials}"){
-								def customImage1 = docker.image("${docker_properties.Docker_Reg_Name}/${docker_properties.om_image_name}")
-								customImage1.push()
-								def customImage2 = docker.image("${docker_properties.Docker_Reg_Name}/${omImageName}")
-								customImage2.push()
-								def customImage3 = docker.image("${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name}")
-								customImage3.push()
-								def customImage4 = docker.image("${docker_properties.Docker_Reg_Name}/${cpImageName}")
-								customImage4.push()
+						Reason = "Publish Docker Images Failed"								
+						def array = []
+						array[0] = "${docker_properties.Docker_Reg_Name}/${docker_properties.om_image_name}"
+						array[1] = "${docker_properties.Docker_Reg_Name}/${docker_properties.cp_image_name}"
+		 				docker.withRegistry("${docker_properties.Docker_Registry_URL}", "${docker_properties.Docker_Credentials}") {
+             						array.each { def a ->
+								//docker.image("${a}").push()
+								//def temp = docker_properties.om_image_name.substring(0 , docker_properties.om_image_name.indexOf(":"))+":latest"
+								docker.image("${a}").push("${docker_properties.version}")
+								docker.image("${a}").push("latest")
+        							}
 							}
-							sh """docker logout""" 
-					
+						sh """docker logout
+							""" 
 					}  //Docker publish stage ends here
 				
 					// ***** Stage for triggering CD pipeline ***** //				
