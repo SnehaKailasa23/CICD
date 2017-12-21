@@ -66,14 +66,12 @@ node {
             JobName = "${JOB_NAME}"
 			if("${BRANCH_NAME}".startsWith('PR-'))
 			{
-                def index = JobName.indexOf("/");
-				lock_resource_name = JobName.substring(0 , index)+"_"+"${CHANGE_TARGET}"
-                Sonar_project_name = lock_resource_name + "PR"
+				lock_resource_name = JobName.substring(0 , JobName.indexOf("/"))+"_"+"${CHANGE_TARGET}"
+                		Sonar_project_name = lock_resource_name + "PR"
 			}
 			else
 			{
-				 def index = JobName.indexOf("/");
-				 lock_resource_name = JobName.substring(0 , index)+"_"+"${BRANCH_NAME}"
+				 lock_resource_name = JobName.substring(0 , JobName.indexOf("/"))+"_"+"${BRANCH_NAME}"
 				 Sonar_project_name = lock_resource_name
 			} 
 		}	// Reading branch variable stage ends
