@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('Back-end') {
             agent {
-                docker { dockerfile true }
+                dockerfile {
+                    filename 'Dockerfile'
+                    dir 'RFW'
+                }
             }
             steps {
                 sh './robot.sh'
