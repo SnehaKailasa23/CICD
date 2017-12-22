@@ -1,4 +1,4 @@
-pipeline {
+/*pipeline {
     agent {
                 dockerfile {
                     filename 'Dockerfile'
@@ -11,6 +11,16 @@ pipeline {
                 sh ' echo hii'
                // sh 'ls -al'
                // sh 'robot/robot.sh'
+            }
+        }
+    }
+}*/
+pipeline {
+    agent { docker 'maven:3-alpine' } 
+    stages {
+        stage('Example Build') {
+            steps {
+                sh 'ls -al'
             }
         }
     }
