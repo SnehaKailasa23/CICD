@@ -18,7 +18,7 @@ def getMavenBuildArtifactName() {
 def notifySuccessful(){
 emailext (
  attachLog: true, attachmentsPattern: '*.html, output.xml', body: '''
- ${SCRIPT, template="email-template.groovy"}''', subject: '$DEFAULT_SUBJECT', to: 'sneha.kailasa@ggktech.com, yerriswamy.konanki@ggktech.com, sunil.boga@ggktech.com'
+ ${SCRIPT, template="email-template2.groovy"}''', subject: '$DEFAULT_SUBJECT', to: 'sneha.kailasa@ggktech.com, yerriswamy.konanki@ggktech.com, sunil.boga@ggktech.com'
  )
 }
  
