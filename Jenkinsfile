@@ -1,13 +1,12 @@
 pipeline {
-    agent none
-    stages {
-        stage('Back-end') {
-            agent {
+    agent {
                 dockerfile {
                     filename 'Dockerfile'
                     dir 'RFW'
                 }
             }
+    stages {
+        stage('Back-end') {
             steps {
                 sh 'ls -al'
                 sh 'robot/robot.sh'
