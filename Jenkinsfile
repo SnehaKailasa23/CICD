@@ -8,8 +8,9 @@ pipeline {
     stages {
         stage('Back-end') {
             steps {
-                sh 'ls -al'
-                sh 'robot/robot.sh'
+                sh ' echo hii'
+               // sh 'ls -al'
+               // sh 'robot/robot.sh'
             }
         }
     }
