@@ -9,7 +9,7 @@ pipeline {
                 }
             }
             steps {
-                sh './robot.sh'
+                sh 'robot/robot.sh'
             }
         }
     }
