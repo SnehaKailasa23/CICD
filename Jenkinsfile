@@ -8,6 +8,7 @@ pipeline {
     stages {
         stage('Back-end') {
             steps {
+                sh 'chmod 777 RFW/robot/robot.sh'
                sh 'RFW/robot/robot.sh'
             }
         }
