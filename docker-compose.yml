@@ -35,7 +35,7 @@ services:
         aliases:
           - cpserver
     extra_hosts:
-      - "dbserver:13.230.47.186"
+      - "dbserver:${dbserver}"
     depends_on:
       - omservice
     command: >
