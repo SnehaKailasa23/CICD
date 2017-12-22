@@ -1,12 +1,14 @@
 pipeline {
     agent {
-        docker { image 'node:7-alpine' }
-    }
+               dockerfile {
+                    filename 'Dockerfile'
+                    dir 'RFW'
+                }
+            }
     stages {
-        stage('Test') {
+        stage('Back-end') {
             steps {
-                sh 'ls -al'
+               sh 'RFW/robot/robot.sh'
             }
         }
     }
-}
